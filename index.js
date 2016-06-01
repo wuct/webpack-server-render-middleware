@@ -6,7 +6,7 @@ module.exports = (compiler, renderer, options) => {
   var filename =
     `${compiler.options.output.path}/${compiler.options.output.filename}`
 
-  compiler.plugin("done", (stats) => {
+  compiler.plugin('done', (stats) => {
     if (!options.quiet) console.log(stats.toString({ color: true }))
 
     state = true
@@ -19,7 +19,7 @@ module.exports = (compiler, renderer, options) => {
       // check if still in valid state
       if(!state) returnw
 
-      console.info("webpack: bundle is now VALID.")
+      console.info('webpack: bundle is now VALID.')
 
       // execute callback that are delayed
       var cbs = callbacks
@@ -30,7 +30,7 @@ module.exports = (compiler, renderer, options) => {
 
   function invalidPlugin() {
     if (state) {
-      console.info("webpack: bundle is now INVALID.")
+      console.info('webpack: bundle is now INVALID.')
     }
     state = false
   }
@@ -40,9 +40,9 @@ module.exports = (compiler, renderer, options) => {
     callback()
   }
 
-  compiler.plugin("invalid", invalidPlugin)
-  compiler.plugin("watch-run", invalidAsyncPlugin)
-  compiler.plugin("run", invalidAsyncPlugin)
+  compiler.plugin('invalid', invalidPlugin)
+  compiler.plugin('watch-run', invalidAsyncPlugin)
+  compiler.plugin('run', invalidAsyncPlugin)
 
 
   // wait for bundle valid
