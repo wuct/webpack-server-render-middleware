@@ -1,4 +1,4 @@
-module.exports = (compiler, options) => {
+module.exports = (compiler, renderer, options) => {
   // the state, false: bundle invalid, true: bundle valid
   var state = false
   var callbacks = []
@@ -62,11 +62,7 @@ module.exports = (compiler, options) => {
     ready(processRequest, req)
 
     function processRequest() {
-      console.log('@@@ server')
-      // server content
-      const renderDOMString = require(filename).renderDOMString
-
-      res.send('<!doctype html>\n' + renderDOMString())
+      res.send('<!doctype html>\n' + renderer(require(filename)))
     }
   }
 
