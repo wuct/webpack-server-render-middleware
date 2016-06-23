@@ -1,4 +1,4 @@
-const middlewareCreator = (compiler, renderer, options) => {
+const middlewareCreator = (compiler, options) => {
   // the state, false: bundle invalid, true: bundle valid
   let state = false
   let queue = []
@@ -64,7 +64,8 @@ const middlewareCreator = (compiler, renderer, options) => {
     ready(processRequest, req)
 
     function processRequest() {
-      res.send('<!doctype html>\n' + renderer(require(filename), req))
+      res.serverBundle = require(filename)
+      next()
     }
   }
 }
