@@ -1,7 +1,11 @@
+import MemoryFileSystem from 'memory-fs'
+
 const middlewareCreator = (compiler, options) => {
   // the state, false: bundle invalid, true: bundle valid
   let state = false
   let queue = []
+  const fs = compiler.outputFileSystem = new MemoryFileSystem()
+
 
   const watchOptions = {
     aggregateTimeout: 200,
@@ -64,7 +68,7 @@ const middlewareCreator = (compiler, options) => {
     ready(processRequest, req)
 
     function processRequest() {
-      res.serverBundle = require(filename)
+      res.serverBundle = fs.readFileSync(filename)
       next()
     }
   }
