@@ -1,4 +1,5 @@
 import MemoryFileSystem from 'memory-fs'
+import evalAsModule from 'eval-as-module'
 
 const middlewareCreator = (compiler, options) => {
   // the state, false: bundle invalid, true: bundle valid
@@ -38,7 +39,7 @@ const middlewareCreator = (compiler, options) => {
 
   const invalidPlugin = () => {
     if (state) {
-      console.info('webpack: bundle is now INVALID.')
+      console.info('webpack: server bundle is now INVALID.')
     }
     state = false
   }
@@ -55,7 +56,7 @@ const middlewareCreator = (compiler, options) => {
   // wait for bundle valid
   const ready = (fn, req) => {
     if (state) return fn()
-    console.log(`webpack: wait until bundle finished: ${req.url || fn.name}`)
+    console.log(`webpack: wait until server bundle finished: ${req.url || fn.name}`)
     queue.push(fn)
   }
 
@@ -68,7 +69,9 @@ const middlewareCreator = (compiler, options) => {
     ready(processRequest, req)
 
     function processRequest() {
-      res.serverBundle = fs.readFileSync(filename)
+      const buffer = fs.readFileSync(filename)
+      const bundleModule = evalAsModule(buffer.toString(), filename)
+      res.serverBundle = bundleModule.exports
       next()
     }
   }

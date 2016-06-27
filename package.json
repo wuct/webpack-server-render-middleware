@@ -39,6 +39,7 @@
     "babel-preset-stage-0": "^6.5.0"
   },
   "dependencies": {
+    "eval-as-module": "^0.1.2",
     "memory-fs": "^0.3.0"
   }
 }
