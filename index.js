@@ -1,3 +1,4 @@
+/* eslint no-console:0 no-param-reassign:0 */
 import MemoryFileSystem from 'memory-fs'
 import evalAsModule from 'eval-as-module'
 
@@ -12,7 +13,7 @@ const middlewareCreator = (compiler, options) => {
     aggregateTimeout: 200,
     ...options.watchOptions,
   }
-  
+
   const filename =
     `${compiler.options.output.path}/${compiler.options.output.filename}`
 
@@ -27,7 +28,7 @@ const middlewareCreator = (compiler, options) => {
     // if a change happend while compiling
     process.nextTick(() => {
       // check if still in valid state
-      if(!state) return
+      if (!state) return
 
       console.info('webpack: bundle is now VALID.')
 
@@ -57,11 +58,11 @@ const middlewareCreator = (compiler, options) => {
   const ready = (fn, req) => {
     if (state) return fn()
     console.log(`webpack: wait until server bundle finished: ${req.url || fn.name}`)
-    queue.push(fn)
+    return queue.push(fn)
   }
 
   compiler.watch(watchOptions, err => {
-    if(err) throw err
+    if (err) throw err
   })
 
   return (req, res, next) => {
