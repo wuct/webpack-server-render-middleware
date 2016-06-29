@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "lint": "eslint ./",
-    "test": "npm run lint",
+    "test": "npm run lint && ava",
     "prebuild": "rm -rf lib",
     "build": "babel --out-dir lib index.js",
     "prepublish": "npm run build"
@@ -34,14 +34,27 @@
       "stage-0"
     ]
   },
+  "ava": {
+    "files": [
+      "./test/*.test.js"
+    ],
+    "babel": "inherit",
+    "require": [
+      "babel-register"
+    ]
+  },
   "devDependencies": {
+    "ava": "^0.15.2",
     "babel-cli": "^6.9.0",
     "babel-eslint": "^6.1.0",
+    "babel-loader": "^6.2.4",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-stage-0": "^6.5.0",
     "eslint": "^2.13.1",
     "eslint-config-airbnb-base": "^3.0.1",
-    "eslint-plugin-import": "^1.9.2"
+    "eslint-plugin-import": "^1.9.2",
+    "express": "^4.14.0",
+    "webpack": "^1.13.1"
   },
   "dependencies": {
     "eval-as-module": "^0.1.2",
