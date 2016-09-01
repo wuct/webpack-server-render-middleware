@@ -7,7 +7,7 @@ const middlewareCreator = (compiler, options) => {
   let state = false
   let queue = []
   const fs = compiler.outputFileSystem = new MemoryFileSystem()
-
+  let serverBundleStat
 
   const watchOptions = {
     aggregateTimeout: 200,
@@ -21,6 +21,7 @@ const middlewareCreator = (compiler, options) => {
     if (!options.quiet) console.log(stats.toString())
 
     state = true
+    serverBundleStat = stats.toJson()
 
     delete require.cache[filename]
 
@@ -73,6 +74,7 @@ const middlewareCreator = (compiler, options) => {
       const buffer = fs.readFileSync(filename)
       const bundleModule = evalAsModule(buffer.toString(), filename)
       res.serverBundle = bundleModule.exports
+      res.serverBundleStat = serverBundleStat
       next()
     }
   }
