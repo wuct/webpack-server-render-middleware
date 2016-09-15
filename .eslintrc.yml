@@ -16,3 +16,6 @@ rules:
     -
       objectsInObjects: false
       arraysInObjects: false
+  arrow-parens:
+    - 2
+    - as-needed

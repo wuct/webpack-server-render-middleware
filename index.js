@@ -17,7 +17,7 @@ const middlewareCreator = (compiler, options) => {
   const filename =
     `${compiler.options.output.path}/${compiler.options.output.filename}`
 
-  compiler.plugin('done', (stats) => {
+  compiler.plugin('done', stats => {
     if (!options.quiet) console.log(stats.toString())
 
     state = true
