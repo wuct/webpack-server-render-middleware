@@ -2,7 +2,7 @@
 import MemoryFileSystem from 'memory-fs'
 import evalAsModule from 'eval-as-module'
 
-const middlewareCreator = (compiler, options) => {
+const middlewareCreator = (compiler, options = {}) => {
   // the state, false: bundle invalid, true: bundle valid
   let state = false
   let queue = []
