@@ -12,7 +12,7 @@ export default {
     loaders: [
       {
         test: /\.js$/,
-        loaders: ['babel'],
+        loaders: ['babel-loader'],
       },
     ],
   },
