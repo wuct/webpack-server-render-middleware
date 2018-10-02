@@ -1,7 +1,7 @@
 {
   "name": "webpack-server-render-middleware",
   "version": "0.1.3",
-  "description": "",
+  "description": "Webpack's dev middleware for server-side rendering",
   "main": "lib/index.js",
   "scripts": {
     "lint": "eslint ./",
