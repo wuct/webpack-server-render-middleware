@@ -8,7 +8,7 @@
     "test": "npm run lint && ava",
     "prebuild": "rm -rf lib",
     "build": "babel --out-dir lib index.js",
-    "prepublish": "npm run build"
+    "prepare": "npm run build"
   },
   "repository": {
     "type": "git",
