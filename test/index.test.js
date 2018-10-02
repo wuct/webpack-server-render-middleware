@@ -1,28 +1,24 @@
-import { test } from 'ava'
 import webpack from 'webpack'
 import config from './webpack.config'
 import webpackServerRenderMiddleware from '../index.js'
 
-test.cb('ok', t => {
-  t.plan(2)
+test('ok', () => {
+  expect.assertions(2)
 
   const compiler = webpack(config)
   const middleware = webpackServerRenderMiddleware(compiler, { quiet: false })
 
   const res = {}
 
-  middleware({}, res, () => {
-    t.is(
-      res.serverBundle.default(),
-      'ok'
-    )
+  return new Promise(resolve => {
+    middleware({}, res, () => {
+      // For: https://github.com/facebook/jest/issues/6046
+      setTimeout(() => {
+        expect(!!res.serverBundleStat.chunks).toBe(true)
+        expect(res.serverBundle.default()).toBe('ok')
 
-    t.is(
-      !!res.serverBundleStat.chunks,
-      true
-    )
-
-    t.end()
+        resolve()
+      }, 100)
+    })
   })
 })
-
