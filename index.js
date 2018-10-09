@@ -17,7 +17,7 @@ const middlewareCreator = (compiler, options) => {
   const filename =
     `${compiler.options.output.path}/${compiler.options.output.filename}`
 
-  compiler.plugin('done', stats => {
+  compiler.hooks.done.tap('webpackServerRenderMiddleware', stats => {
     if (!options.quiet) console.log(stats.toString())
 
     state = true
@@ -51,9 +51,9 @@ const middlewareCreator = (compiler, options) => {
     callback()
   }
 
-  compiler.plugin('invalid', invalidPlugin)
-  compiler.plugin('watch-run', invalidAsyncPlugin)
-  compiler.plugin('run', invalidAsyncPlugin)
+  compiler.hooks.invalid.tap('webpackServerRenderMiddleware', invalidPlugin)
+  compiler.hooks.watchRun.tapAsync('webpackServerRenderMiddleware', invalidAsyncPlugin)
+  compiler.hooks.run.tap('webpackServerRenderMiddleware', invalidAsyncPlugin)
 
   // wait for bundle valid
   const ready = (fn, req) => {
