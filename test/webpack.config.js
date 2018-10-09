@@ -2,6 +2,7 @@ import path from 'path'
 
 export default {
   target: 'node',
+  mode: 'production',
   entry: path.resolve(__dirname, './entry.js'),
   output: {
     path: __dirname,
